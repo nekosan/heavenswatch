@@ -3,15 +3,33 @@ body {
   margin: 0px;
 }
 
-input {
-  margin: 0 auto 5px auto;
+#openner {
+  width: 20px;
+  height: 20px;
+  color: #ccc;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  background-color: #fff;
+  display: block;
+  margin: 10px auto 0 auto;
+  padding: 0;
+}
+
+input[type="text"] {
   width: 150px;
+  margin: 0px auto 10px auto;
+  padding: 0;
+}
+
+div#content {
+  min-width: 150px;
+  text-align: center;
 }
 
 table {
-  margin: 5px auto 0 auto;
-  min-width: 100px;
-  border: 1px #000 solid;
+  margin: 0 auto;
+  min-width: 150px;
+  border: 1px #ccc solid;
 }
 td {
   white-space: nowrap;

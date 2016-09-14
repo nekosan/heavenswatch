@@ -1,31 +1,29 @@
 $(function(){
-    var masterAddress = '';
-    
-    var setMasterAddress = function() {
-        chrome.storage.local.get('masterAddress', function(items){
-            if(items.masterAddress != undefined){
-                $('#host_name').val(items.masterAddress);
-                masterAddress = items.masterAddress;
-            }
-        });
-    }();
+    var setAlarm = function(){
+        chrome.alarms.create('notification', {'periodInMinutes': 1});
+    };
+    var clearAlarm = function(){
+        chrome.alarms.clear('notification');
+    };
 
-    $('#host_name').on('change', function(e){
-        var v = $(this).val();
-        masterAddress = v;
-        chrome.storage.local.set({'masterAddress': v}, function(){});
+    $("#openner").on('click', function(){
+        $("#hide").toggle();
     });
+
+    var masterAddress = '';
+    var notificationList = [];
 
     var resultDiv = $('#content');
     var getDoorStatus = function() {
-        console.log(resultDiv);
-        console.log(masterAddress);
+        if(masterAddress === '') {
+            resultDiv.html("ホスト名が設定されていません");
+            return;
+        }
         $.ajax({
             type: 'GET',
             url: masterAddress + '/heavensdoor/showall',
             dataType: 'json'
         }).done(function(json, textStatus, jqXHR){
-            console.log(json);
             var len = json.length;
             var html = [];
             html.push('<table>');
@@ -34,6 +32,13 @@ $(function(){
             }
             for(var i = 0; i < len; i++){
                 html.push('<tr>');
+                html.push('<td>');
+                if(notificationList.indexOf(json[i].label) >= 0){
+                    html.push('<input class="nc" type="checkbox" value="' + json[i].label + '" checked="checked" />');
+                } else {
+                    html.push('<input class="nc" type="checkbox" value="' + json[i].label + '" />');
+                }
+                html.push('</td>');
                 html.push('<td>');
                 if(json[i].alias){
                     html.push(json[i].alias);
@@ -55,6 +60,25 @@ $(function(){
             }
             html.push('</table>');
             resultDiv.html(html.join(''));
+            $('input.nc').on('change', function(){
+                var notificationList = [];
+                var list = $(this);
+                for(var i = 0; i < list.length; i++) {
+                    if($(list[i]).prop('checked')){
+                        notificationList.push($(list[i]).val());
+                    }
+                }
+                if(notificationList.length <= 0){
+                    console.log('clear');
+                    clearAlarm();
+                } else {
+                    console.log('set');
+                    setAlarm();
+                }
+                chrome.storage.local.set({'notificationList': notificationList}, function(){});
+            });
+        }).fail(function(){
+            resultDiv.html('通信に失敗しました');
         });
 
         function diffFromNow(d) {
@@ -74,8 +98,19 @@ $(function(){
         }
     };
 
-    window.setTimeout(getDoorStatus, 500);
+    chrome.storage.local.get('masterAddress', function(items){
+        if(items.masterAddress != undefined){
+            masterAddress = items.masterAddress;
+            chrome.storage.local.get('notificationList', function(items){
+                if(items.notificationList != undefined){
+                    notificationList = items.notificationList;
+                    getDoorStatus();
+                }
+            });
+        }
+    });
 
     $('#reflesh').on('click', getDoorStatus);
+
 
 });
