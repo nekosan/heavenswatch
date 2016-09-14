@@ -1,0 +1,14 @@
+{
+    "manifest_version": 2,
+    "name": "Heavens Watch",
+    "version": "0.1",
+    "description": "HeavensDoor用観測ツール",
+    "browser_action": {
+        "default_popup": "popup.html",
+        "default_icon": "icon.png"
+    },
+    "permissions": ["tabs", "storage", "http://*/*"],
+    "icons": {
+        "128" : "icon.png"
+    }
+}

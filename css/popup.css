@@ -1,0 +1,42 @@
+body {
+  padding: 10px;
+  margin: 0px;
+}
+
+input {
+  margin: 0 auto 5px auto;
+  width: 150px;
+}
+
+table {
+  margin: 5px auto 0 auto;
+  min-width: 100px;
+  border: 1px #000 solid;
+}
+td {
+  white-space: nowrap;
+}
+
+.circle {
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+}
+.circle.green {
+  background-color: #0F0;
+}
+.circle.red{
+  background-color: #F00;
+}
+
+.door{
+  background: url("../img/door.png");
+  width:32px;
+  height:32px;
+}
+.door.open{
+  background-position: left;
+}
+.door.close{
+  background-position: right;
+}
