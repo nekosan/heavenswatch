@@ -46,12 +46,14 @@
                         }
                     }
                     chrome.storage.local.set({'notificationList': closeList}, function(){});
-                    chrome.notifications.create('doorNotification', {
-                        type: 'basic',
-                        iconUrl: 'img/icon_128.png',
-                        title: 'Open sesame...',
-                        message: openList.join(', ')
-                     }, function(notificationId) {});
+                    if(openList.length > 0){
+                        chrome.notifications.create('doorNotification', {
+                            type: 'basic',
+                            iconUrl: 'img/icon_128.png',
+                            title: 'Open sesame...',
+                            message: openList.join(', ')
+                        }, function(notificationId) {});
+                    }
                 }).fail(function(){
                 });
             }
