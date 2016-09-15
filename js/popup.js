@@ -61,21 +61,21 @@ $(function(){
             html.push('</table>');
             resultDiv.html(html.join(''));
             $('input.nc').on('change', function(){
-                var notificationList = [];
+                var nList = [];
                 var list = $(this);
                 for(var i = 0; i < list.length; i++) {
                     if($(list[i]).prop('checked')){
-                        notificationList.push($(list[i]).val());
+                        nList.push($(list[i]).val());
                     }
                 }
-                if(notificationList.length <= 0){
+                if(nList.length <= 0){
                     console.log('clear');
                     clearAlarm();
                 } else {
                     console.log('set');
                     setAlarm();
                 }
-                chrome.storage.local.set({'notificationList': notificationList}, function(){});
+                chrome.storage.local.set({'notificationList': nList}, function(){});
             });
         }).fail(function(){
             resultDiv.html('通信に失敗しました');
@@ -104,8 +104,8 @@ $(function(){
             chrome.storage.local.get('notificationList', function(items){
                 if(items.notificationList != undefined){
                     notificationList = items.notificationList;
-                    getDoorStatus();
                 }
+                getDoorStatus();
             });
         }
     });
