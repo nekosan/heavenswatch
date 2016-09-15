@@ -3,6 +3,16 @@ body {
   margin: 0px;
 }
 
+h3 {
+  padding: 0;
+  margin: 10px 5px 5px 5px;
+}
+
+ol {
+  padding: 0 0 0 8px;
+  margin: 5px;
+}
+
 #openner {
   width: 20px;
   height: 20px;

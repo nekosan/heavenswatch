@@ -39,7 +39,7 @@
                     for(var i = 0; i < len; i++){
                         if(notificationList.indexOf(json[i].label)>= 0){
                             if(json[i].value){
-                                openList.push(json[i].label);
+                                openList.push(json[i].alias);
                             } else {
                                 closeList.push(json[i].label);
                             }
