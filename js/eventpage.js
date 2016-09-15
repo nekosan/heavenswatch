@@ -48,7 +48,7 @@
                     chrome.storage.local.set({'notificationList': closeList}, function(){});
                     chrome.notifications.create('doorNotification', {
                         type: 'basic',
-                        iconUrl: 'icon.png',
+                        iconUrl: 'img/icon_128.png',
                         title: 'Open sesame...',
                         message: openList.join(', ')
                      }, function(notificationId) {});
